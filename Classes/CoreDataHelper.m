@@ -50,12 +50,14 @@ static id sharedInstance = nil;
 
 - (void)save
 {
-    
+    [self save:nil];
 }
 
 - (void)save:(NSError *__autoreleasing *)err
 {
-    
+    if (_managedObjectContext.hasChanges) {
+        [_managedObjectContext save:err];
+    }
 }
 
 @end
