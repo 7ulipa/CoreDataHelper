@@ -62,7 +62,7 @@
                 value = [NSClassFromString(relation.destinationEntity.name) create:value];
             } else if ([value isKindOfClass:[NSArray class]]) {
                 NSMutableArray *newValue = [NSMutableArray arrayWithCapacity:[value count]];
-                for (NSUInteger i = 0; [value count]; i ++) {
+                for (NSUInteger i = 0; i < [value count]; i ++) {
                     id object = value[i];
                     if ([object isKindOfClass:[NSDictionary class]]) {
                         
