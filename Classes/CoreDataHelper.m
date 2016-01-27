@@ -23,9 +23,19 @@ static id sharedInstance = nil;
         _managedObjectModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:[[[NSBundle mainBundle] bundleURL] URLByAppendingPathComponent:[NSString stringWithFormat:@"%@.momd", inModelName ?: @"CoreDataModels"]]];
         _managedObjectContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
         _persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:_managedObjectModel];
+        [_persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:[self URLForStore] options:nil error:nil];
         _managedObjectContext.persistentStoreCoordinator = _persistentStoreCoordinator;
     }
     return self;
+}
+
+- (NSURL *)URLForStore
+{
+    NSString *path = [NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES) firstObject];
+    if (![[NSFileManager defaultManager] fileExistsAtPath:path]) {
+        [[NSFileManager defaultManager] createDirectoryAtPath:path withIntermediateDirectories:NO attributes:nil error:nil];
+    }
+    return [NSURL fileURLWithPath:[path stringByAppendingPathComponent:@"CoreData.sql"]];
 }
 
 + (instancetype)sharedInstance
