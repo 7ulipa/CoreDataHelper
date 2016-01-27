@@ -65,12 +65,12 @@
                 for (NSUInteger i = 0; i < [value count]; i ++) {
                     id object = value[i];
                     if ([object isKindOfClass:[NSDictionary class]]) {
-                        
+                        object = [NSClassFromString(relation.destinationEntity.name) create:object];
                     }
                     [newValue addObject:object];
                 }
                 value = newValue;
-
+                
                 if (relation.ordered) {
                     value = [[NSOrderedSet alloc] initWithArray:value];
                 } else {
