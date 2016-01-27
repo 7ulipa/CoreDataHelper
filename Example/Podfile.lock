@@ -1,0 +1,14 @@
+PODS:
+  - CoreDataHelper (0.0.1)
+
+DEPENDENCIES:
+  - CoreDataHelper (from `../`)
+
+EXTERNAL SOURCES:
+  CoreDataHelper:
+    :path: ../
+
+SPEC CHECKSUMS:
+  CoreDataHelper: dbf4482699d27af8d870cac6743be337b48e0f1d
+
+COCOAPODS: 0.39.0
