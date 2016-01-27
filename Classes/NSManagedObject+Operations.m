@@ -245,7 +245,7 @@
     if ([condition isKindOfClass:[NSDictionary class]]) {
         NSMutableArray *predicates = [[NSMutableArray alloc] initWithCapacity:[[condition allKeys] count]];
         [condition enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
-            [predicates addObject:[NSPredicate predicateWithFormat:@"%k = %@", key, obj]];
+            [predicates addObject:[NSPredicate predicateWithFormat:@"%K == %@", key, obj]];
         }];
         return [NSCompoundPredicate andPredicateWithSubpredicates:predicates];
     }
