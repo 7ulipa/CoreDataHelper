@@ -37,12 +37,22 @@
 
 + (id)create:(NSDictionary *)attributes
 {
-    NSManagedObject *result = [self create];
-    [result update:attributes];
+   return [self create:attributes search:NO];
+}
+
++ (id)create:(NSDictionary *)attributes search:(BOOL)search
+{
+    NSManagedObject *result = search ? ([self where:attributes limit:@1].firstObject ?: [self create]) : [self create];
+    [result update:attributes search:search];
     return result;
 }
 
 - (void)update:(NSDictionary *)attributes
+{
+    [self update:attributes search:NO];
+}
+
+- (void)update:(NSDictionary *)attributes search:(BOOL)search
 {
     if ((id)attributes == [NSNull null] || self == nil) {
         return;
@@ -59,7 +69,7 @@
         } else if ([relationShips objectForKey:key]) {
             NSRelationshipDescription *relation = [relationShips objectForKey:key];
             if ([value isKindOfClass:[NSDictionary class]]) {
-                value = [NSClassFromString(relation.destinationEntity.name) create:value];
+                value = [NSClassFromString(relation.destinationEntity.name) create:value search:search];
             } else if ([value isKindOfClass:[NSArray class]]) {
                 NSMutableArray *newValue = [NSMutableArray arrayWithCapacity:[value count]];
                 for (NSUInteger i = 0; i < [value count]; i ++) {

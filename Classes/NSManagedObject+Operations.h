@@ -16,7 +16,9 @@
 
 + (id)create;
 + (id)create:(NSDictionary *)attributes;
++ (id)create:(NSDictionary *)attributes search:(BOOL)search;
 - (void)update:(NSDictionary *)attributes;
+- (void)update:(NSDictionary *)attributes search:(BOOL)search;
 
 + (NSArray *)all;
 + (NSArray *)allWithOrder:(id)order;
