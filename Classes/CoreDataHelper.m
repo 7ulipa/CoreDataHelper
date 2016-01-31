@@ -23,7 +23,7 @@ static id sharedInstance = nil;
         _managedObjectModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:[[[NSBundle mainBundle] bundleURL] URLByAppendingPathComponent:[NSString stringWithFormat:@"%@.momd", inModelName ?: @"CoreDataModels"]]];
         _managedObjectContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
         _persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:_managedObjectModel];
-        [_persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:[self URLForStore] options:nil error:nil];
+        [_persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:[self URLForStore] options:@{NSInferMappingModelAutomaticallyOption: @YES, NSMigratePersistentStoresAutomaticallyOption: @YES} error:nil];
         _managedObjectContext.persistentStoreCoordinator = _persistentStoreCoordinator;
     }
     return self;
